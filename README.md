@@ -34,6 +34,7 @@ $ npm install
 명령을 터미널에서 실행하여 라이브러리 설치
 
 5. 추가 라이브러리
+
 ```
 $ npm install react-icons // 아이콘
 $ npm install classnames // 클래스 add/remove 편리한거
@@ -42,6 +43,7 @@ $ npm install reactstrap bootstrap
 $ npm install @mui/material @emotion/react @emotion/styled
 $ npm install @mui/icons-material
 $ npm install react-router-dom
+$ npm install axios // 비동기 통신 라이브러리 (fetch보다 더 많은 기능을 제공)
 ```
 
 ## 리액트 라우터 설정
@@ -49,10 +51,12 @@ $ npm install react-router-dom
 - index.js에 BrowserRouter 컴포넌트로 App 감싸기.
 
 ```javascript
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(
+  document.getElementById('root'),
+);
 root.render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>
+  </BrowserRouter>,
 );
 ```
