@@ -1,34 +1,36 @@
-import { Login } from '@mui/icons-material';
-import { redirect } from 'react-router-dom';
-
 const handleError = (error, onLogout, redirection) => {
+  console.log('handleError 호출됨!');
   if (error.response && error.response.status === 401) {
-    console.log();
-    console.log();
-    alert(
-      '로그인 시간이 만료되었습니다. 다시 로그인 해 주세요.',
-    );
-    onLogout();
-    redirection('/');
+    if (error.response.data.message === 'INVALID_AUTH') {
+      alert('로그인이 필요한 서비스 입니다.');
+      redirection('/login');
+    } else if (
+      error.response.data.message === 'EXPIRED_TOKEN'
+    ) {
+      console.log('onLogout: ', onLogout);
+      console.log('redirection: ', redirection);
+      alert(
+        '로그인 시간이 만료되었습니다. 다시 로그인 해 주세요.',
+      );
+      onLogout();
+      redirection('/login');
+    }
   } else if (
     error.response &&
     error.response.status === 400
   ) {
-    alert('잘못된 요청입니다.');
+    // 400 에러에 대한 내용...
   } else if (
     error.response &&
     error.response.status === 403
   ) {
-    alert('권한이 없습니다.');
-  } else {
-    alert('알 수 없는 에러가 발생했습니다.');
+    // 403 에러에 대한 내용...
   }
 };
 
 const handleRequest = async (
   requestFunc,
   onSuccess,
-  onError,
   onLogout,
   redirection,
 ) => {
@@ -40,11 +42,6 @@ const handleRequest = async (
   } catch (error) {
     console.log(error);
     handleError(error, onLogout, redirection);
-    if (onError) {
-      onError(error);
-    } else {
-      alert('알 수 없는 에러 발생. 다시 시도해 주세요.');
-    }
   }
 };
 
